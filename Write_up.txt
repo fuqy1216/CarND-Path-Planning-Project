@@ -1,0 +1,21 @@
+How the project was completed:
+I completed the project majorly based on the instructions given by the project Q&A section. The detailed steps including:
+1) Getting the car start to run by creating the intended path in (x,y) coordinate (main.cpp line 188-295):
+	a) Get two points from the previous path 
+    b) Generate three more points of the intended path/lane (including convert (s,d) coordinate into (x,y)
+    c) Generate the spline curve based on the five points in a) and b) using spline.h
+    d) Find the corresponding points on the spline curve based on the sampling rate and car speed
+
+2) Though the car now can follow the lane, it cannot avoid collision. Thus, sensor fusion data is used to determine vehicles around the car (main.cpp line 112-167):
+	a) Detect if the car is too close to the car in front (if any).
+    b) Detect if there are cars in the left and right lanes that are too close to the current car, which may affect the safety of lane merging.
+    
+3) Based on the detection results in 2), we can develop several scenarios for behavior planning (main.cpp line 170-186):
+	a) If there is no car in front within 30 meters, our car will accelerate to and maintain the target speed of 49.5 MPH
+    b) If there is a car in front within 30 meters:
+    	i) If the car cannot safely merge left or right, the car will slow down
+        ii) If the car can safely merge to left or right (left is preferred), initiate merging
+
+Limitations:
+1) Though achieving everything required in the rubric, I have not used the cost function in my application but used a scenario based behavioral planning instead. It works fine for this simulation, but may not work for complicated situations.
+2) The car will prefer to merge left regardless if the speed of the car in the left lane is faster than the front car, or than the car in the right lane. This results in suboptimal solution. Again, the behavioral planning can be improved to optimize the path.
